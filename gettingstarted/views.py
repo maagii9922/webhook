@@ -7,7 +7,7 @@ import re
 
 import random
 
-PAGE_ACCESS_TOKEN = "DQVJ2ZATUxOVUtdllmbk9VT0g4T3Q0WmY0SXg1MnBRZAVdaN0MzeVpqNUh2RGZAHeDlvSDIwUkV6ZAWs3WEFOck5CSk83VTV0cHk2bmh3VS16X1BuY3RrUENqdG9QZAVprTnNzajRhY196WVZARM2FIMm5RZAVV3cjBSbGc5azVlaUJsNVJwck1QUG5fbG1DaTZAZAU2Vpdkd4bXJzMF9OeHhqS3Bpamtmb3A3aTc2dnJNTXNGS1JnRmFOMzJ6YUdMc2Vvd01UNGFwcHdzeV9SYlhWbWxZAQQZDZD"
+PAGE_ACCESS_TOKEN = "EAANZA3YNaNMEBAGANyI222q2bM4rTgHGZBHy4bggKyIJITs36XlI07mU0USiiVNM8M5GPB7Fj8DL83dneKWgHoe7S8Gy3VuEw3TQHaofY4z20gRkNUkYt1orW91gPUZCWcJMJZAiSKrqIS6EM3mcrngaaRJkfepRIKNlG8pqXMhb9l4EAkA5"
 VERIFY_TOKEN = "2318934571"
 
 class BotView(generic.View):
@@ -63,5 +63,15 @@ def post_facebook_message(fbid, recevied_message):
             break
     if not joke_text:
         print(u"Би ойлгосонгүй! Бидэн уруу 'Холбоо барих', 'Түгээмэл асуулт хариулт', 'Эхлэх' гэж илгээнэ үү!")
+    
+
+    user_details_url = "https://graph.facebook.com/v2.6/%s" % fbid
+    user_details_params = {
+        'fields': 'first_name,last_name', 'access_token': PAGE_ACCESS_TOKEN}
+    user_details = requests.get(user_details_url, user_details_params).json()
+    joke_text = 'Yo ' + user_details['first_name'] + '..! ' + joke_text
+
+
+
     print(joke_text)
     return HttpResponse(joke_text)
